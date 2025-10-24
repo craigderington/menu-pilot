@@ -1,0 +1,51 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2 th:text="${event.name}"></h2>
+    <a class="btn secondary" th:href="@{'/admin/events/' + ${event.id} + '/design'}">Design & Branding</a>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn" th:href="@{'/staff/events/' + ${event.id} + '/prep-list'}">Prep List</a>
+      <a class="btn secondary" th:href="@{'/export/events/' + ${event.id} + '/menu.csv'}">Export Menu CSV</a>
+      <a class="btn secondary" th:href="@{'/export/events/' + ${event.id} + '/preorders.csv'}">Export Preorders CSV</a>
+      <a class="btn secondary" th:href="@{'/export/events/' + ${event.id} + '/prep-list.csv'}">Export Prep List CSV</a>
+      <a class="btn" th:href="@{'/export/events/' + ${event.id} + '/menu.pdf'}">Printable Menu (PDF)</a>
+      <a class="btn" th:href="@{'/export/events/' + ${event.id} + '/tickets.pdf'}">Kitchen Tickets (PDF)</a>
+      <form method="get" th:action="@{'/export/events/' + ${event.id} + '/tickets-receipt.pdf'}" style="display:flex;gap:8px;align-items:center;">
+        <label>Copies</label>
+        <input type="number" name="copies" value="1" min="1" style="width:80px"/>
+        <button class="btn" type="submit">Receipt Tickets PDF</button>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Menu Items</h3>
+    <table>
+      <thead><tr><th>Name</th><th>Station</th><th>Cap</th></tr></thead>
+      <tbody>
+        <tr th:each="i : ${items}">
+          <td th:text="${i.name}"></td>
+          <td th:text="${i.station}"></td>
+          <td th:text="${i.capQty}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Add Item</h3>
+    <form method="post" th:action="@{'/admin/events/' + ${event.id} + '/items'}" class="grid grid-2">
+      <input name="name" placeholder="Short Rib" required/>
+      <input name="station" placeholder="Grill/Garde"/>
+      <input name="capQty" type="number" placeholder="12"/>
+      <input name="priceCents" type="number" placeholder="2400"/>
+      <textarea name="description" placeholder="Details..."></textarea>
+      <button class="btn" type="submit">Add</button>
+    </form>
+  </div>
+  <div class="card">
+    <h3>Import Menu CSV</h3>
+    <form th:action="@{'/export/events/' + ${event.id} + '/menu/import/preview'}" method="post" enctype="multipart/form-data" class="grid">
+      <input type="file" name="file" accept=".csv" required/>
+      <button class="btn" type="submit">Preview Import</button>
+    </form>
+    <p>CSV headers: <code>name,station,capQty,priceCents,description</code></p>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: menupilot
+    env: docker
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /actuator/health
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_FORCE_HTTPS
+        value: "true"
+      - key: JAVA_OPTS
+        value: "-Xms256m -Xmx512m"

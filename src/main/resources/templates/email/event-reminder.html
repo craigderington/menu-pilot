@@ -1,0 +1,7 @@
+<!doctype html>
+<html><body style="font-family:system-ui">
+  <h2 th:text="${eventName}">Event</h2>
+  <p>Pre-orders are open for this event.</p>
+  <p><a th:href="${eventUrl}" style="background:#111;color:#fff;padding:10px 14px;border-radius:6px;text-decoration:none">Open Event</a></p>
+  <p th:if="${cutoffAt != null}">Cutoff: <span th:text="${cutoffAt}"></span></p>
+</body></html>

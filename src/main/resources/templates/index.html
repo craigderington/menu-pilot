@@ -1,0 +1,33 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2 th:text="${email} != null ? 'Welcome, ' + ${email} : 'Welcome'"></h2>
+    <p th:if="${email} == null"><a class="btn" th:href="@{/auth/login}">Sign in</a></p>
+    <p th:if="${email} != null">
+      <form method="post" th:action="@{/auth/logout}"><button class="btn secondary" type="submit">Sign out</button></form>
+    </p>
+  </div>
+  <div class="card" th:if="${events}">
+    <h3>Upcoming Events</h3>
+    <table>
+      <thead><tr><th>Name</th><th>Starts</th><th></th></tr></thead>
+      <tbody>
+        <tr th:each="e : ${events}">
+          <td th:text="${e.name}"></td>
+          <td th:text="${e.startsAt}"></td>
+          <td><a class="btn" th:href="@{'/events/' + ${e.id}}">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Admin</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn" th:href="@{/admin/events}">Manage Events</a>
+      <a class="btn secondary" th:href="@{/admin/org}">Org Settings</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Billing</h3>
+    <a class="btn" th:href="@{/billing}">Open Billing</a>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Organization</h2>
+    <p><strong>Name:</strong> <span th:text="${org.name}"></span></p>
+    <p><strong>Plan:</strong> <span th:text="${org.plan}"></span></p>
+    <p><strong>Status:</strong> <span th:text="${org.subscriptionStatus}"></span></p>
+  </div>
+  <div class="card">
+    <h3>Logo</h3>
+    <div style="margin:8px 0;">
+      <img th:if="${org.logoPath}" th:src="@{/admin/org/logo}" alt="Logo" style="max-height:80px"/>
+      <p th:if="${org.logoPath == null}">No logo uploaded.</p>
+    </div>
+    <form method="post" th:action="@{/admin/org/logo}" enctype="multipart/form-data" class="grid">
+      <input type="file" name="file" accept="image/*" required/>
+      <button class="btn" type="submit">Upload/Replace Logo</button>
+    </form>
+    <p>Tip: Transparent PNG looks best.</p>
+  </div>
+</div>

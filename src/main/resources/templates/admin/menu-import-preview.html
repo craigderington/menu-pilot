@@ -1,0 +1,24 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Preview Import</h2>
+    <p th:if="${hasErrors}" style="color:#a00;">Some rows have errors. Fix your CSV and re-upload, or proceed to import valid rows only.</p>
+    <table>
+      <thead><tr><th>Name</th><th>Station</th><th>Cap</th><th>Price (¢)</th><th>Description</th><th>Error</th></tr></thead>
+      <tbody>
+        <tr th:each="r : ${rows}">
+          <td th:text="${r.name}"></td>
+          <td th:text="${r.station}"></td>
+          <td th:text="${r.capQty}"></td>
+          <td th:text="${r.priceCents}"></td>
+          <td th:text="${r.description}"></td>
+          <td th:text="${r.error} ?: ''"></td>
+        </tr>
+      </tbody>
+    </table>
+    <form method="post" th:action="@{'/export/events/' + ${event.id} + '/menu/import/commit'}">
+      <input type="hidden" name="payload" th:value="${payload}"/>
+      <button class="btn" type="submit" th:disabled="${#lists.isEmpty(rows)}">Import Valid Rows</button>
+      <a class="btn secondary" th:href="@{'/admin/events/' + ${event.id}}">Cancel</a>
+    </form>
+  </div>
+</div>

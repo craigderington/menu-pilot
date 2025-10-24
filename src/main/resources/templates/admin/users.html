@@ -1,0 +1,31 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Users</h2>
+    <div style='display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;'>
+      <a class='btn secondary' href='/export/users.csv'>Export Users CSV</a>
+      <form method='post' action='/export/users/import/preview' enctype='multipart/form-data' style='display:flex;gap:8px;'>
+        <input type='file' name='file' accept='.csv' required/>
+        <button class='btn' type='submit'>Preview Import</button>
+      </form>
+    </div>
+    <table>
+      <thead><tr><th>Email</th><th>Role</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr th:each="u : ${users}">
+          <td th:text="${u.email}"></td>
+          <td th:text="${u.role}"></td>
+          <td>
+            <form th:action="@{'/admin/users/' + ${u.id} + '/role'}" method="post" style="display:flex;gap:8px;">
+              <select name="role">
+                <option>MEMBER</option>
+                <option>STAFF</option>
+                <option>ADMIN</option>
+              </select>
+              <button class="btn secondary" type="submit">Save</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

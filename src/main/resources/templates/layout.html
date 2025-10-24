@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MenuPilot</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}"/>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:0;background:#f7f7fb;color:#111}
+    header{background:#111;color:#fff;padding:12px 16px}
+    main{max-width:900px;margin:24px auto;padding:0 16px}
+    .card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:16px;margin-bottom:16px}
+    .btn{display:inline-block;padding:8px 14px;border-radius:8px;border:none;background:#111;color:#fff;text-decoration:none}
+    .btn.secondary{background:#eaeaea;color:#111}
+    table{border-collapse:collapse;width:100%} th,td{border-bottom:1px solid #eee;padding:8px;text-align:left}
+    input,select,textarea{padding:8px;border:1px solid #ddd;border-radius:8px;width:100%}
+    .grid{display:grid;gap:12px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  </style>
+</head>
+<body>
+<header>
+  <strong>MenuPilot</strong>
+</header>
+<main>
+  <div th:replace="${content}"></div>
+</main>
+</body>
+</html>

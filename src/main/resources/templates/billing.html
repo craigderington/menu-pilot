@@ -1,0 +1,19 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Billing</h2>
+    <div th:if="${param.msg}">
+      <p th:if="${param.msg[0] == 'subscription_required'}" style="color:#b00020;">An active subscription is required to access that area.</p>
+    </div>
+    <div th:if="${!configured}">
+      <p>Stripe not configured. Set <code>STRIPE_SECRET</code>, <code>STRIPE_PRICE_ID</code>, and <code>STRIPE_WEBHOOK_SECRET</code> env vars.</p>
+    </div>
+    <div th:if="${configured}">
+      <p>Plan: <strong th:text="${org.plan} ?: '—'"></strong></p>
+      <p>Status: <strong th:text="${org.subscriptionStatus} ?: '—'"></strong></p>
+      <div style="display:flex; gap:12px;">
+        <a class="btn" th:href="@{/billing/subscribe}">Start/Update Subscription</a>
+        <a class="btn secondary" th:href="@{/billing/portal}">Manage in Customer Portal</a>
+      </div>
+    </div>
+  </div>
+</div>

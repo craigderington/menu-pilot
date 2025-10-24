@@ -1,0 +1,25 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Events</h2><p><a class='btn secondary' href='/admin/org'>Org Settings</a></p>
+    <table>
+      <thead><tr><th>Name</th><th>Starts</th><th></th></tr></thead>
+      <tbody>
+        <tr th:each="e : ${events}">
+          <td th:text="${e.name}"></td>
+          <td th:text="${e.startsAt}"></td>
+          <td><a class="btn" th:href="@{'/admin/events/' + ${e.id}}">Open</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Create Event</h3>
+    <form method="post" th:action="@{/admin/events}" class="grid grid-2">
+      <input type="text" name="name" placeholder="Event name" required/>
+      <input type="text" name="startsAt" placeholder="2025-10-31T18:00:00Z" required/>
+      <input type="text" name="cutoffAt" placeholder="2025-10-31T15:00:00Z"/>
+      <textarea name="notes" placeholder="Notes..."></textarea>
+      <button class="btn" type="submit">Create</button>
+    </form>
+  </div>
+</div>

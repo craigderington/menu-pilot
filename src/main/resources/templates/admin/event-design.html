@@ -1,0 +1,42 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Design &amp; Branding</h2>
+    <p><strong th:text="${event.name}"></strong></p>
+  </div>
+  <div class="card">
+    <h3>Logo</h3>
+    <img th:src="@{/admin/org/logo}" alt="Logo" style="max-height:80px" onerror="this.style.display='none'"/>
+    <p><a class="btn secondary" th:href="@{/admin/org}">Change Logo</a></p>
+  </div>
+  <div class="card">
+    <h3>Cover Image</h3>
+    <img th:if="${event.coverImagePath != null}" th:src="@{'/admin/events/' + ${event.id} + '/design/cover.png'}" alt="Cover" style="max-width:100%;max-height:200px;object-fit:cover"/>
+    <p th:if="${event.coverImagePath == null}">No cover uploaded.</p>
+    <form method="post" th:action="@{'/admin/events/' + ${event.id} + '/design/cover'}" enctype="multipart/form-data" class="grid">
+      <input type="file" name="file" accept="image/*" required/>
+      <button class="btn" type="submit">Upload/Replace Cover</button>
+    </form>
+  </div>
+  <div class="card">
+    <h3>Theme Accent</h3>
+    <form method="post" th:action="@{'/admin/events/' + ${event.id} + '/design/theme'}" class="grid grid-2">
+      <input type="text" name="accent" placeholder="#1f2937" th:value="${event.themeAccentHex}"/>
+      <button class="btn" type="submit">Save Accent</button>
+    </form>
+  </div>
+  <div class="card">
+    <h3>PDF Preview Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <a class="btn" th:href="@{'/export/events/' + ${event.id} + '/menu.pdf'}">Menu PDF</a>
+      <a class="btn" th:href="@{'/export/events/' + ${event.id} + '/tickets.pdf'}">Tickets (Table) PDF</a>
+      <form method="get" th:action="@{'/export/events/' + ${event.id} + '/tickets-receipt.pdf'}" style="display:flex;gap:8px;align-items:center;">
+        <label>Copies</label>
+        <input type="number" name="copies" value="1" min="1" style="width:80px"/>
+        <button class="btn" type="submit">Receipt Tickets PDF</button>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <a class="btn" th:href="@{'/admin/events/' + ${event.id}}">Back to Event</a>
+  </div>
+</div>

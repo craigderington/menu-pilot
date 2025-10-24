@@ -1,0 +1,22 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Preview User Import</h2>
+    <p th:if="${hasErrors}" style="color:#a00;">Some rows have errors. Fix and re-upload, or import only valid rows.</p>
+    <table>
+      <thead><tr><th>Email</th><th>Role</th><th>Active</th><th>Error</th></tr></thead>
+      <tbody>
+        <tr th:each="r : ${rows}">
+          <td th:text="${r.email}"></td>
+          <td th:text="${r.role}"></td>
+          <td th:text="${r.active}"></td>
+          <td th:text="${r.error} ?: ''"></td>
+        </tr>
+      </tbody>
+    </table>
+    <form method="post" th:action="@{'/export/users/import/commit'}">
+      <input type="hidden" name="payload" th:value="${payload}"/>
+      <button class="btn" type="submit">Import Valid Rows</button>
+      <a class="btn secondary" th:href="@{/admin/users}">Cancel</a>
+    </form>
+  </div>
+</div>

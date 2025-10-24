@@ -1,0 +1,10 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2>Sign in</h2>
+    <form method="post" th:action="@{/auth/send-code}" class="grid">
+      <input type="email" name="email" placeholder="you@example.com" required/>
+      <button class="btn" type="submit">Send magic link</button>
+    </form>
+  </div>
+  <p th:if="${error}" th:text="${error}" style="color:red"></p>
+</div>

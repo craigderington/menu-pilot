@@ -1,0 +1,36 @@
+<div th:fragment="content">
+  <div class="card">
+    <h2 th:text="${event.name}"></h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;">
+      <a class="btn secondary" th:href="@{'/export/events/' + ${event.id} + '/menu.pdf'}">Printable Menu (PDF)</a>
+    </div>
+    <div th:if="${param.saved}">✅ Saved!</div>
+    <div th:if="${param.error}">
+      <div th:switch="${param.error}">
+        <div th:case="'cutoff'">⚠️ Pre-orders are closed for this event.</div>
+        <div th:case="'cap'">⚠️ Not enough remaining for that item. Try a smaller quantity.</div>
+        <div th:case="*">⚠️ Something went wrong.</div>
+      </div>
+    </div>
+    <div th:if="${cutoffPassed}" style="color:#a00;">Pre-orders are closed (past cutoff).</div>
+    <form method="post" th:action="@{'/events/' + ${event.id} + '/preorder'}" th:if="${!cutoffPassed}">
+      <table>
+        <thead><tr><th>Item</th><th>Station</th><th>Cap</th><th>Remaining</th><th>Qty</th></tr></thead>
+        <tbody>
+          <tr th:each="i : ${items}">
+            <td>
+              <div th:text="${i.name}"></div>
+              <small th:text="${i.description}"></small>
+              <input type="hidden" name="itemId" th:value="${i.id}"/>
+            </td>
+            <td th:text="${i.station}">-</td>
+            <td th:text="${i.capQty}">∞</td>
+            <td th:text="${remaining[i.id]} == null ? '∞' : ${remaining[i.id]}">-</td>
+            <td><input type="number" name="qty" min="0" value="0" th:attr="max=${remaining[i.id]}"/></td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn" type="submit">Save Pre-Order</button>
+    </form>
+  </div>
+</div>
